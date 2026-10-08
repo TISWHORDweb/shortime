@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.creatorRouter = void 0;
+const express_1 = require("express");
+const auth_middleware_1 = require("../../middlewares/auth.middleware");
+const role_middleware_1 = require("../../middlewares/role.middleware");
+const creator_controller_1 = require("./creator.controller");
+exports.creatorRouter = (0, express_1.Router)();
+exports.creatorRouter.post("/creator/profile", auth_middleware_1.requireAuth, (0, role_middleware_1.requireRole)("creator"), creator_controller_1.upsertCreatorProfile);
+exports.creatorRouter.patch("/creator/profile", auth_middleware_1.requireAuth, (0, role_middleware_1.requireRole)("creator"), creator_controller_1.upsertCreatorProfile);
+exports.creatorRouter.get("/creator/:creatorId/profile", auth_middleware_1.requireAuth, creator_controller_1.getCreatorProfile);
+exports.creatorRouter.post("/admin/creators/:creatorId/approve", auth_middleware_1.requireAuth, (0, role_middleware_1.requireRole)("admin"), creator_controller_1.approveCreator);
